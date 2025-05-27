@@ -18,7 +18,7 @@ CREATE TABLE User (
 
 -- 2025.05.27 상품 테이블 --
 CREATE TABLE product (
-    product_id                 BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '상품 고유 ID',
+    product_id                 BIGINT PRIMARY KEY         NOT NULL        COMMENT '상품 고유 ID',
     product_name               VARCHAR(255)               NOT NULL        COMMENT '상품명',
     product_description        TEXT                                       COMMENT '상품 상세 설명',
     product_brand              VARCHAR(100)                               COMMENT '브랜드명',
@@ -30,7 +30,7 @@ CREATE TABLE product (
     product_color_options      TEXT                                       COMMENT '색상 옵션 (JSON 문자열)',
     product_main_image_url     VARCHAR(512)               DEFAULT NULL    COMMENT '대표 이미지 URL',
     product_thumbnail_urls     TEXT                                       COMMENT '썸네일 이미지 리스트 (JSON 문자열)',
-    product_status             ENUM('active', 'sold_out', 'disabled') 
+    product_status             ENUM('판매중', '품절', '판매중지' 등) 
                                                           DEFAULT 'active'COMMENT '상품 상태',
     product_is_featured        TINYINT(1)                 DEFAULT 0       COMMENT '추천 상품 여부 (0/1)',
     product_is_new             TINYINT(1)                 DEFAULT 0       COMMENT '신상품 여부 (0/1)',
