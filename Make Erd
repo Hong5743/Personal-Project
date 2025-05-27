@@ -1,3 +1,4 @@
+-- 2025.05.26 사용자 테이블(미완) --
 CREATE TABLE User (
     user_no               VARCHAR2(20) PRIMARY KEY,  -- 일련번호 (PK)
     user_id               VARCHAR2(50),              -- 아이디
@@ -13,3 +14,40 @@ CREATE TABLE User (
     user_email_verified   VARCHAR2(1)                -- 이메일 인증 여부 (예: 'Y', 'N')
 );
 -- 2025.05.27 비밀번호 중복 취소를 위해 UNIQUE 추가
+-- 사용자 테이블 끝--
+
+-- 2025.05.27 상품 테이블 --
+CREATE TABLE product (
+    product_id                 BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '상품 고유 ID',
+    product_name               VARCHAR(255)               NOT NULL        COMMENT '상품명',
+    product_description        TEXT                                       COMMENT '상품 상세 설명',
+    product_brand              VARCHAR(100)                               COMMENT '브랜드명',
+    product_category_id        BIGINT UNSIGNED            NOT NULL        COMMENT '카테고리 ID (FK)',
+    product_price              DECIMAL(10,2)              NOT NULL        COMMENT '정가',
+    product_discount_price     DECIMAL(10,2)              DEFAULT NULL    COMMENT '할인가',
+    product_stock              INT UNSIGNED               DEFAULT 0       COMMENT '재고 수량',
+    product_size_options       TEXT                                       COMMENT '사이즈 옵션 (JSON 문자열)',
+    product_color_options      TEXT                                       COMMENT '색상 옵션 (JSON 문자열)',
+    product_main_image_url     VARCHAR(512)               DEFAULT NULL    COMMENT '대표 이미지 URL',
+    product_thumbnail_urls     TEXT                                       COMMENT '썸네일 이미지 리스트 (JSON 문자열)',
+    product_status             ENUM('active', 'sold_out', 'disabled') 
+                                                          DEFAULT 'active'COMMENT '상품 상태',
+    product_is_featured        TINYINT(1)                 DEFAULT 0       COMMENT '추천 상품 여부 (0/1)',
+    product_is_new             TINYINT(1)                 DEFAULT 0       COMMENT '신상품 여부 (0/1)',
+    product_delivery_fee       DECIMAL(10,2)              DEFAULT 0.00    COMMENT '배송비',
+    product_seller_id          BIGINT UNSIGNED            DEFAULT NULL    COMMENT '판매자 ID (입점형 플랫폼용)',
+    product_material           VARCHAR(255)               DEFAULT NULL    COMMENT '소재 정보',
+    product_origin_country     VARCHAR(100)               DEFAULT NULL    COMMENT '제조국',
+    product_care_instructions  TEXT                                       COMMENT '세탁 및 관리 방법',
+    product_view_count         INT UNSIGNED               DEFAULT 0       COMMENT '조회 수',
+    product_review_score_avg   DECIMAL(3,2)               DEFAULT 0.00    COMMENT '평균 평점',
+    product_sales_count        INT UNSIGNED               DEFAULT 0       COMMENT '누적 판매 수량',
+    product_created_at         DATETIME                   DEFAULT CURRENT_TIMESTAMP   COMMENT '등록일',
+    product_updated_at         DATETIME                   DEFAULT CURRENT_TIMESTAMP 
+                                                          ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일',
+
+    -- 인덱스
+    INDEX idx_product_category_id  (product_category_id),
+    INDEX idx_product_status       (product_status),
+    INDEX idx_product_seller_id    (product_seller_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='상품 테이블';
