@@ -51,3 +51,16 @@ CREATE TABLE product (
     INDEX idx_product_status       (product_status),
     INDEX idx_product_seller_id    (product_seller_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='상품 테이블';
+
+--- 장바구니 ---
+CREATE TABLE `wish_list` (
+	`user_id`	    varchar2	NOT NULL,
+	`product_id`	BIGINT	    NOT NULL	COMMENT '상품 고유 ID',
+	`수량`	VARCHAR(255)	NULL
+);
+
+--- 찜 목록 ---
+CREATE TABLE `like_list` (
+	`user_id`	    varchar2	NOT NULL,
+	`product_id`	BIGINT	    NOT NULL	COMMENT '상품 고유 ID'
+);
