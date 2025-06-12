@@ -26,7 +26,6 @@ CREATE TABLE product (
     product_price              DECIMAL(10,2)              NOT NULL        COMMENT '정가',
     product_discount_price     DECIMAL(10,2)              DEFAULT NULL    COMMENT '할인가',
     product_stock              INT UNSIGNED               DEFAULT 0       COMMENT '재고 수량',
-    product_size_options       TEXT                                       COMMENT '사이즈 옵션 (JSON 문자열)',
     product_color_options      TEXT                                       COMMENT '색상 옵션 (JSON 문자열)',
     product_main_image_url     VARCHAR(512)               DEFAULT NULL    COMMENT '대표 이미지 URL',
     product_thumbnail_urls     TEXT                                       COMMENT '썸네일 이미지 리스트 (JSON 문자열)',
@@ -63,4 +62,18 @@ CREATE TABLE `wish_list` (
 CREATE TABLE `like_list` (
 	`user_id`	    varchar2	NOT NULL,
 	`product_id`	BIGINT	    NOT NULL	COMMENT '상품 고유 ID'
+);
+
+--- 상품 기장 --- 
+CREATE TABLE `length` (
+	`product_id`	BIGINT	NOT NULL	COMMENT '상품 고유 ID',
+	`사이즈 일련번호`	BIGINT	NOT NULL,
+	`부위`	varchar2	NULL,
+	`기장`	VARCHAR(255)	NULL
+);
+
+--- 사이즈 ---
+CREATE TABLE `size` (
+	`사이즈 일련번호`	BIGINT	NOT NULL,
+	`사이즈명`	varchar2	NULL
 );
